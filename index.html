@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WCGA | Building the Premier Women's Collegiate Sport</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;500;600;700&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --wcga-teal: #3CC8C4;
+            --midnight: #0B0F1A;
+            --navy: #1A2744;
+            --electric-magenta: #E91E63;
+            --hot-pink: #FF1B6B;
+            --vivid-gold: #FFB800;
+            --electric-cyan: #00D4FF;
+            --emerald-green: #00C853;
+            --royal-purple: #7C3AED;
+            --pure-white: #FFFFFF;
+            --silver: #B8C5D6;
+            --gradient-fire: linear-gradient(135deg, #E91E63 0%, #FF1B6B 50%, #FF6B35 100%);
+            --gradient-gold: linear-gradient(135deg, #FFB800 0%, #FFC847 50%, #FFE066 100%);
+            --gradient-teal: linear-gradient(135deg, #3CC8C4 0%, #2FB5B1 50%, #28A8A4 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Source Sans 3', sans-serif;
+            background: var(--midnight);
+            color: var(--pure-white);
+        }
+
+        /* Top accent bar */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--wcga-teal) 0%, var(--emerald-green) 33%, var(--vivid-gold) 66%, var(--wcga-teal) 100%);
+            z-index: 9999;
+        }
+
+        /* Slide Container */
+        .slides-container {
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 5rem 8rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+            background: var(--midnight);
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Background image slides */
+        .slide.has-bg {
+            background-size: cover;
+            background-position: center;
+        }
+
+        .slide.has-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(11,15,26,0.88) 0%, rgba(26,39,68,0.82) 100%);
+            z-index: 1;
+        }
+
+        .slide-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* MASSIVE Typography */
+        h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 8rem;
+            letter-spacing: 0.05em;
+            line-height: 0.95;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 80px rgba(0,0,0,0.5);
+        }
+
+        h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 5.5rem;
+            letter-spacing: 0.05em;
+            line-height: 1;
+            margin-bottom: 2rem;
+        }
+
+        h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.2rem;
+            letter-spacing: 0.03em;
+            margin-bottom: 1rem;
+            color: var(--pure-white);
+        }
+
+        .section-label {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            background: var(--gradient-fire);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 2rem;
+            display: inline-block;
+        }
+
+        p {
+            font-size: 1.8rem;
+            line-height: 1.6;
+            color: var(--silver);
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        p.large {
+            font-size: 2.2rem;
+            color: var(--pure-white);
+        }
+
+        .highlight {
+            color: var(--pure-white);
+            font-weight: 600;
+        }
+
+        /* Color classes */
+        .teal { color: var(--wcga-teal); }
+        .gold { color: var(--vivid-gold); }
+        .pink { color: var(--hot-pink); }
+        .cyan { color: var(--electric-cyan); }
+        .green { color: var(--emerald-green); }
+        .purple { color: var(--royal-purple); }
+
+        /* Glowing Logo */
+        .logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 12rem;
+            letter-spacing: 0.12em;
+            color: var(--wcga-teal);
+            margin-bottom: 2rem;
+            text-shadow: 
+                0 0 40px rgba(60, 200, 196, 0.6),
+                0 0 80px rgba(60, 200, 196, 0.4),
+                0 0 120px rgba(60, 200, 196, 0.2);
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 40px rgba(60, 200, 196, 0.6), 0 0 80px rgba(60, 200, 196, 0.4); }
+            to { text-shadow: 0 0 60px rgba(60, 200, 196, 0.8), 0 0 100px rgba(60, 200, 196, 0.5), 0 0 140px rgba(60, 200, 196, 0.3); }
+        }
+
+        .tagline {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 400;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            color: var(--silver);
+            margin-top: 2rem;
+        }
+
+        /* Quote styling */
+        .quote {
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 3.2rem;
+            font-weight: 600;
+            color: var(--pure-white);
+            line-height: 1.3;
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .quote-mark {
+            font-size: 10rem;
+            color: var(--hot-pink);
+            opacity: 0.4;
+            position: absolute;
+            top: -4rem;
+            left: -3rem;
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+
+        /* POWERFUL Cards with hover effect like website */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .card {
+            background: rgba(26, 39, 68, 0.7);
+            border: 2px solid rgba(60, 200, 196, 0.3);
+            border-radius: 16px;
+            padding: 2.5rem;
+            text-align: left;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* THE MAGIC HOVER EFFECT - Color inversion like the website */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-fire);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 0;
+        }
+
+        .card:hover {
+            border-color: var(--hot-pink);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(233, 30, 99, 0.3);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card h3, .card p {
+            position: relative;
+            z-index: 1;
+            transition: color 0.4s ease;
+        }
+
+        .card:hover h3 {
+            color: var(--pure-white) !important;
+        }
+
+        .card:hover p {
+            color: rgba(255,255,255,0.9) !important;
+        }
+
+        .card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--wcga-teal);
+        }
+
+        .card p {
+            font-size: 1.3rem;
+            color: var(--silver);
+            text-align: left;
+            line-height: 1.5;
+        }
+
+        /* Value cards with different colored accents */
+        .card.pink-accent { border-left: 4px solid var(--hot-pink); }
+        .card.gold-accent { border-left: 4px solid var(--vivid-gold); }
+        .card.teal-accent { border-left: 4px solid var(--wcga-teal); }
+        .card.cyan-accent { border-left: 4px solid var(--electric-cyan); }
+        .card.green-accent { border-left: 4px solid var(--emerald-green); }
+        .card.purple-accent { border-left: 4px solid var(--royal-purple); }
+
+        .card.pink-accent h3 { color: var(--hot-pink); }
+        .card.gold-accent h3 { color: var(--vivid-gold); }
+        .card.teal-accent h3 { color: var(--wcga-teal); }
+        .card.cyan-accent h3 { color: var(--electric-cyan); }
+        .card.green-accent h3 { color: var(--emerald-green); }
+        .card.purple-accent h3 { color: var(--royal-purple); }
+
+        /* Big stat callouts */
+        .stat-row {
+            display: flex;
+            justify-content: center;
+            gap: 6rem;
+            margin-top: 4rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 7rem;
+            line-height: 1;
+            background: var(--gradient-fire);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.2rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--silver);
+            margin-top: 0.5rem;
+        }
+
+        /* Powerful list */
+        .power-list {
+            list-style: none;
+            text-align: left;
+            max-width: 900px;
+            margin: 3rem auto 0;
+        }
+
+        .power-list li {
+            font-size: 1.8rem;
+            color: var(--silver);
+            padding: 1.2rem 0;
+            padding-left: 3rem;
+            position: relative;
+            border-bottom: 1px solid rgba(60, 200, 196, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .power-list li:hover {
+            color: var(--pure-white);
+            padding-left: 3.5rem;
+            border-bottom-color: var(--hot-pink);
+        }
+
+        .power-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--hot-pink);
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .power-list li:hover::before {
+            transform: translateX(0.5rem);
+            color: var(--vivid-gold);
+        }
+
+        .power-list .list-highlight {
+            color: var(--pure-white);
+            font-weight: 600;
+        }
+
+        /* CTA Button */
+        .cta-btn {
+            display: inline-block;
+            margin-top: 3rem;
+            padding: 1.5rem 4rem;
+            background: var(--gradient-fire);
+            color: var(--pure-white);
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 40px rgba(233, 30, 99, 0.4);
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 20px 60px rgba(233, 30, 99, 0.5);
+        }
+
+        /* Navigation */
+        .nav-controls {
+            position: fixed;
+            bottom: 2.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            z-index: 100;
+            background: rgba(11, 15, 26, 0.95);
+            padding: 1rem 2rem;
+            border-radius: 60px;
+            border: 2px solid rgba(60, 200, 196, 0.4);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: var(--silver);
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+        }
+
+        .nav-btn:hover {
+            color: var(--wcga-teal);
+            background: rgba(60, 200, 196, 0.1);
+        }
+
+        .slide-counter {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.4rem;
+            letter-spacing: 0.1em;
+            color: var(--pure-white);
+        }
+
+        .slide-counter span {
+            color: var(--wcga-teal);
+        }
+
+        .progress-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            height: 4px;
+            background: var(--gradient-fire);
+            z-index: 100;
+            transition: width 0.4s ease;
+        }
+
+        /* Fullscreen button */
+        .fullscreen-btn {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: rgba(26, 39, 68, 0.9);
+            border: 2px solid rgba(60, 200, 196, 0.4);
+            color: var(--silver);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .fullscreen-btn:hover {
+            border-color: var(--wcga-teal);
+            color: var(--wcga-teal);
+            background: rgba(60, 200, 196, 0.1);
+        }
+
+        /* Decorative elements */
+        .accent-line {
+            width: 100px;
+            height: 4px;
+            background: var(--gradient-fire);
+            margin: 2rem auto;
+            border-radius: 2px;
+        }
+
+        /* Split layout */
+        .split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: center;
+            text-align: left;
+        }
+
+        .split h2, .split p {
+            text-align: left;
+            margin: 0;
+        }
+
+        /* Big impact words */
+        .impact-word {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 6rem;
+            display: block;
+            line-height: 1;
+            margin: 0.5rem 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 1400px) {
+            .slide { padding: 4rem 5rem; }
+            h1 { font-size: 6rem; }
+            h2 { font-size: 4.5rem; }
+            .logo { font-size: 9rem; }
+            .quote { font-size: 2.6rem; }
+        }
+
+        @media (max-width: 1024px) {
+            .slide { padding: 3rem; }
+            h1 { font-size: 4rem; }
+            h2 { font-size: 3rem; }
+            .logo { font-size: 6rem; }
+            .grid-3 { grid-template-columns: 1fr; }
+            .grid-2 { grid-template-columns: 1fr; }
+            .split { grid-template-columns: 1fr; gap: 2rem; }
+            .stat-row { flex-direction: column; gap: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progress"></div>
+    
+    <button class="fullscreen-btn" onclick="toggleFullscreen()">⛶ PRESENT</button>
+
+    <div class="slides-container">
+        
+        <!-- Slide 1: Title - MAXIMUM IMPACT -->
+        <div class="slide active has-bg" style="background-image: url('https://audia-consulting.github.io/wcga-manifesto/Dickies-Arena-Dark.jpg');">
+            <div class="slide-content">
+                <div class="logo">WCGA</div>
+                <h1>Building the Premier<br><span class="pink">Women's Collegiate Sport</span></h1>
+                <p class="tagline">Women's Collegiate Gymnastics Association</p>
+            </div>
+        </div>
+
+        <!-- Slide 2: The Stakes -->
+        <div class="slide has-bg" style="background-image: url('https://audia-consulting.github.io/wcga-manifesto/Dickies-Arena-Corner.jpg');">
+            <div class="slide-content">
+                <div class="section-label">This Is Our Moment</div>
+                <h1><span class="teal">The World</span> Is Ready</h1>
+                <p class="large">A movement to elevate women's collegiate gymnastics to its rightful place-<span class="highlight">commanding attention, resources, and respect.</span></p>
+            </div>
+        </div>
+
+        <!-- Slide 3: Core Belief - Quote -->
+        <div class="slide has-bg" style="background-image: url('https://audia-consulting.github.io/wcga-manifesto/Lexi.jpg'); background-position: center 20%;">
+            <div class="slide-content">
+                <div class="section-label">Core Belief</div>
+                <div class="quote">
+                    <span class="quote-mark">"</span>
+                    Gymnastics provides the foundation for developing <span class="pink">daring</span>, <span class="gold">strong</span>, and <span class="teal">confident</span> women.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Impact - Visual Cards -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="section-label">Beyond The Competition Floor</div>
+                <h2>We Transform <span class="gold">Lives</span></h2>
+                <div class="grid-3">
+                    <div class="card pink-accent">
+                        <h3>Families</h3>
+                        <p>Shared commitment and values that strengthen bonds across generations.</p>
+                    </div>
+                    <div class="card gold-accent">
+                        <h3>Businesses</h3>
+                        <p>Principled, driven leaders who excel in every professional arena.</p>
+                    </div>
+                    <div class="card teal-accent">
+                        <h3>Communities</h3>
+                        <p>Women who lead with confidence, integrity, and inspire millions.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Purpose -->
+        <div class="slide has-bg" style="background-image: url('https://audia-consulting.github.io/wcga-manifesto/Dickies-Arena-Floor.jpg');">
+            <div class="slide-content">
+                <div class="section-label">Our Purpose</div>
+                <h1>To <span class="pink">Champion</span> The Growth</h1>
+                <p class="large">We exist to elevate this sport to its rightful place as the <span class="highlight">premier women's collegiate sport.</span></p>
+            </div>
+        </div>
+
+        <!-- Slide 6: Vision -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="section-label">Our Vision</div>
+                <h2>Filling Arenas With<br><span class="gold">Passionate Fans</span></h2>
+                <p>We see a future where the Olympic passion that makes gymnastics the <span class="highlight">#1 watched sport globally</span> translates into year-round engagement collegiately.</p>
+                <div class="stat-row">
+                    <div class="stat">
+                        <div class="stat-number">#1</div>
+                        <div class="stat-label">Most Watched Olympic Sport</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">20+</div>
+                        <div class="stat-label">Training Hours Weekly</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">∞</div>
+                        <div class="stat-label">Growth Potential</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Values Overview -->
+        <div class="slide has-bg" style="background-image: url('https://audia-consulting.github.io/wcga-manifesto/UGA%20OU.jpg');">
+            <div class="slide-content">
+                <div class="section-label">Our Commitment</div>
+                <h1>Six Values.<br><span class="teal">One Mission.</span></h1>
+            </div>
+        </div>
+
+        <!-- Slide 8: Values Grid -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="grid-3">
+                    <div class="card pink-accent">
+                        <h3>Leadership</h3>
+                        <p>We lead by example, demonstrating the standard we want others to follow.</p>
+                    </div>
+                    <div class="card gold-accent">
+                        <h3>Innovation</h3>
+                        <p>We pioneer the future through imaginative thinking and bold action.</p>
+                    </div>
+                    <div class="card teal-accent">
+                        <h3>Grit</h3>
+                        <p>We persevere through challenge, using setbacks as fuel for growth.</p>
+                    </div>
+                    <div class="card cyan-accent">
+                        <h3>Connection</h3>
+                        <p>We strengthen through unity, building relationships that elevate all.</p>
+                    </div>
+                    <div class="card green-accent">
+                        <h3>Stewardship</h3>
+                        <p>We protect what matters-athletes, traditions, and the sport's potential.</p>
+                    </div>
+                    <div class="card purple-accent">
+                        <h3>Passion</h3>
+                        <p>We ignite enthusiasm that fills arenas and transforms observers into fans.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: The Opportunity -->
+        <div class="slide has-bg" style="background-image: url('https://audia-consulting.github.io/wcga-manifesto/Dickies-Arena-Corner.jpg');">
+            <div class="slide-content">
+                <div class="section-label">The Moment Is Now</div>
+                <h1>The <span class="pink">Pageantry</span> And The <span class="gold">Poise</span></h1>
+                <p class="large">Women's collegiate gymnastics has everything required to become the premier women's collegiate sport.</p>
+            </div>
+        </div>
+
+        <!-- Slide 10: Why We Win -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="section-label">Why We Will Succeed</div>
+                <h2>We Have <span class="pink">Everything</span></h2>
+                <div class="grid-2">
+                    <div class="card pink-accent">
+                        <h3>World-Class Athleticism</h3>
+                        <p>Combined with artistic expression. Athletes who have dedicated thousands of hours emerge as disciplined, resilient champions.</p>
+                    </div>
+                    <div class="card gold-accent">
+                        <h3>Unmatched Fan Experience</h3>
+                        <p>The energy is electric. The pageantry rivals any collegiate event. Fans don't just watch-they participate.</p>
+                    </div>
+                    <div class="card teal-accent">
+                        <h3>Exceptional Student-Athletes</h3>
+                        <p>Maintaining exceptional GPAs while training 20+ hours weekly. Leaders ready to make an immediate impact.</p>
+                    </div>
+                    <div class="card cyan-accent">
+                        <h3>Proven Global Appeal</h3>
+                        <p>Olympic women's gymnastics is the #1 most-watched sport globally. The audience exists. The appetite is undeniable.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Investment Required -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="section-label">Commitment Required</div>
+                <h2>The <span class="pink">Investment</span> Required</h2>
+                <ul class="power-list">
+                    <li><span class="list-highlight">Advocacy</span> - Using your voice to elevate the sport at every level</li>
+                    <li><span class="list-highlight">Innovation</span> - Pioneering new approaches to fan engagement</li>
+                    <li><span class="list-highlight">Collaboration</span> - Collective success elevates every program</li>
+                    <li><span class="list-highlight">Belief</span> - Committing to the vision. Showing up when it matters.</li>
+                    <li><span class="list-highlight">Resources</span> - Financial capital to operate at a premier level</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 12: Call to Action -->
+        <div class="slide has-bg" style="background-image: url('https://audia-consulting.github.io/wcga-manifesto/UF%20Lights.jpg');">
+            <div class="slide-content">
+                <div class="section-label">The Call To Action</div>
+                <h1>This Is <span class="teal">Your</span> Association</h1>
+                <p class="large">Your investment determines its strength. Every program choosing to invest more-<span class="highlight">more advocacy, more innovation, more belief.</span></p>
+            </div>
+        </div>
+
+        <!-- Slide 13: The Question -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2><span class="pink">Invest</span> In The Future</h2>
+                <div class="accent-line"></div>
+                <p class="large" style="margin-top: 2rem;">Use your voice, your energy, your resources to elevate this sport.</p>
+            </div>
+        </div>
+
+        <!-- Slide 14: Final - Maximum Impact -->
+        <div class="slide has-bg" style="background-image: url('https://audia-consulting.github.io/wcga-manifesto/Dickies-Arena-Dark.jpg');">
+            <div class="slide-content">
+                <span class="impact-word teal">The World Is Watching.</span>
+                <span class="impact-word gold">The Opportunity Is Here.</span>
+                <span class="impact-word pink">The Time Is Now.</span>
+                <p class="tagline" style="margin-top: 4rem; font-size: 2rem; letter-spacing: 0.5em;">THIS IS THE WCGA WAY</p>
+            </div>
+        </div>
+
+        <!-- Slide 15: Close -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="logo">WCGA</div>
+                <p style="font-size: 1.8rem; color: var(--silver); margin-bottom: 2rem;">Women's Collegiate Gymnastics Association</p>
+                <p style="font-size: 1.5rem;">
+                    <a href="https://wcgagym.com" style="color: var(--wcga-teal); text-decoration: none; border-bottom: 2px solid var(--wcga-teal);">wcgagym.com</a>
+                </p>
+                <p class="tagline" style="margin-top: 4rem;">Building the Premier Women's Collegiate Sport</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav-controls">
+        <button class="nav-btn" onclick="prevSlide()">←</button>
+        <span class="slide-counter"><span id="current">1</span> / <span id="total">15</span></span>
+        <button class="nav-btn" onclick="nextSlide()">→</button>
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const progress = document.getElementById('progress');
+        const currentEl = document.getElementById('current');
+        const totalEl = document.getElementById('total');
+        let currentSlide = 0;
+
+        totalEl.textContent = slides.length;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[index].classList.add('active');
+            currentEl.textContent = index + 1;
+            progress.style.width = ((index + 1) / slides.length * 100) + '%';
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                prevSlide();
+            } else if (e.key === 'f' || e.key === 'F') {
+                toggleFullscreen();
+            } else if (e.key === 'Home') {
+                currentSlide = 0;
+                showSlide(currentSlide);
+            } else if (e.key === 'End') {
+                currentSlide = slides.length - 1;
+                showSlide(currentSlide);
+            }
+        });
+
+        // Click navigation
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.nav-controls') || e.target.closest('.fullscreen-btn') || e.target.closest('.card')) return;
+            if (e.clientX > window.innerWidth / 2) {
+                nextSlide();
+            } else {
+                prevSlide();
+            }
+        });
+
+        // Touch support
+        let touchStartX = 0;
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+        });
+        document.addEventListener('touchend', (e) => {
+            const touchEndX = e.changedTouches[0].clientX;
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) nextSlide();
+                else prevSlide();
+            }
+        });
+    </script>
+</body>
+</html>
